@@ -1,0 +1,45 @@
+---
+title: "Modele de regression LIneaire"
+author: "Conde Aissa Coralie M"
+date: "2022-12-13"
+output:
+  html_document: default
+  word_document: default
+---
+
+##Importation de donnees
+```{R Importation}
+md=read.csv("creditbancaire.csv")
+attach(md)
+```
+
+```{r Affiche}
+str(md)
+```
+```{r modele ecconometrique}
+eco<-lm(Jours~Credit+Type,data =md)
+eco
+summary(eco)
+names(eco)
+coefficients(eco)
+```
+```{r coefficient, valeur student et probabilite} 
+resultat<-summary(eco)
+resultat$coefficients
+```
+```{r coefficients estimes et valeur de la statistique de student}
+resultat2<-summary(eco)
+resultat2$coefficients[,3]
+```
+```{r representation graphique}
+plot(Jours~Credit,data=md)
+abline(eco)
+```
+##Creation d'une fonction qui produit une fonction lineaire
+```{r}
+df<-function(data){
+  data<-data.frame(y,x)
+  modele<-summary(lm(y~.data),na.rm=T)
+  modele.regression<-list(summary(lm(y~.data),na.rm=T)$coefficients[,3])
+}
+```
